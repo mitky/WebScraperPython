@@ -74,8 +74,9 @@ for cards in cards_table:
         card_id_regex = re.compile(r"^([^a-zA-Z]*)")
         edition = re.search(card_id_regex, card_id).group(0)
         try:
-            page = requests.get(URL)
-            soup = BeautifulSoup(page.content, "html.parser")
+            NEW_URL = URL_PRICING + "/" + editions_dict[edition].replace(" ","-") + "/" + card_name_cleaned;
+            page_price = requests.get(NEW_URL)
+            soup2 = BeautifulSoup(page_price.content, "html.parser")
             #runGQL(card_name_cleaned,editions_dict[edition].replace(" ","-"))
             pass
         except TypeError as numerr:
