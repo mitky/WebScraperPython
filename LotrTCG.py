@@ -9,6 +9,7 @@ import re
 now = now = datetime.now()
 
 URL = "https://lotrtcgwiki.com/wiki/grand" 
+URL_PRICING = "https://www.ccgcastle.com/product/lotr-tcg/" 
 page = requests.get(URL)
 soup = BeautifulSoup(page.content, "html.parser")
 
@@ -73,9 +74,9 @@ for cards in cards_table:
         card_id_regex = re.compile(r"^([^a-zA-Z]*)")
         edition = re.search(card_id_regex, card_id).group(0)
         try:
-           
-            #card_type = row.find('td', class_= 'col2').string   
-            runGQL(card_name_cleaned,editions_dict[edition].replace(" ","-"))
+            page = requests.get(URL)
+            soup = BeautifulSoup(page.content, "html.parser")
+            #runGQL(card_name_cleaned,editions_dict[edition].replace(" ","-"))
             pass
         except TypeError as numerr:
             card_name.string =='Number'
