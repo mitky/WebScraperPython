@@ -72,27 +72,25 @@ for cards in cards_table:
         #will fix this tomorrow, too sleepy to make dict
         card_name_cleaned = str(card_name).replace(",","").replace(" ","-").replace("•","").replace("-(D)","").replace("-(M)","").replace("-(D)","").replace("-(SPD)","").replace("-(W)","").replace("-(P)","").replace("-(AFD)","").replace("-(T)","")
         card_id_regex = re.compile(r"^([^a-zA-Z]*)")
+        card_price_regex = re.compile(r"(\d)(<\w+ \w+=\"\w+-\w+\">.)(\d+)")
         edition = re.search(card_id_regex, card_id).group(0)
-        if edition == 0:
-            continue
-        try:
-            NEW_URL = URL_PRICING + editions_dict[edition].replace(" ","-") + "/" + card_name_cleaned
-            page_price = requests.get(NEW_URL)
-            print(NEW_URL)
-            soup_price = BeautifulSoup(page_price.content, "html.parser")
-            #price_table = 
-            card_price = soup_price.find(class_='item-price')
-
-            print(str(card_price))
-            #print(str(card_price))
-            #runGQL(card_name_cleaned,editions_dict[edition].replace(" ","-"))
+        print(edition)
+        if edition == '0':
             pass
-        except TypeError as numerr:
-            card_name.string =='Number'
-            print(numerr)
-    """     except TypeError as outside:
-            card_
-            print(outside)
-            """
+        NEW_URL = URL_PRICING + editions_dict[edition].replace(" ","-") + "/" + card_name_cleaned
+        page_price = requests.get(NEW_URL)
+        print(NEW_URL)
+        soup_price = BeautifulSoup(page_price.content, "html.parser")
+        #price_table = 
+        card_price = soup_price.find(class_='item-price')
+        card_price2 = soup_price.find(class_='sub-price')
+        card_price_formatted  = re.search(card_price_regex, str(card_price)).group(0)
+        #print(str(card_price2))
+        #print(str(card_price_formatted))
+        print(card_price_formatted)
+        #runGQL(card_name_cleaned,editions_dict[edition].replace(" ","-"))
+
+
+         
             
 print("Process End:", now.strftime("%d/%m/%Y %H:%M:%S"))
