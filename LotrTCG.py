@@ -84,5 +84,5 @@ for cards in cards_table:
         print(card_price_formatted)
         #runGQL(card_name_cleaned,editions_dict[edition].replace(" ","-"))
 
-            
+asd = 2            
 print("Process End:", now.strftime("%d/%m/%Y %H:%M:%S"))
