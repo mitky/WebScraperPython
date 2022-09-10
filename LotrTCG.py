@@ -7,7 +7,7 @@ from datetime import datetime
 import re
 
 now = now = datetime.now()
-
+source = "ccgcastle"
 URL = "https://lotrtcgwiki.com/wiki/grand" 
 URL_PRICING = "https://www.ccgcastle.com/product/lotr-tcg/" 
 page = requests.get(URL)
@@ -62,7 +62,6 @@ def runGQL(name, edition):
 
 cards_table = soup.find_all('table', class_='inline') # look for class in div 
 
-#look for specific tags
 print("Process Start:", now.strftime("%d/%m/%Y %H:%M:%S"))
 for cards in cards_table:
     rows = cards.find_all('tr')
@@ -74,23 +73,16 @@ for cards in cards_table:
         card_id_regex = re.compile(r"^([^a-zA-Z]*)")
         card_price_regex = re.compile(r"(\d)(<\w+ \w+=\"\w+-\w+\">.)(\d+)")
         edition = re.search(card_id_regex, card_id).group(0)
-        print(edition)
         if edition == '0':
             pass
         NEW_URL = URL_PRICING + editions_dict[edition].replace(" ","-") + "/" + card_name_cleaned
         page_price = requests.get(NEW_URL)
-        print(NEW_URL)
         soup_price = BeautifulSoup(page_price.content, "html.parser")
-        #price_table = 
         card_price = soup_price.find(class_='item-price')
         card_price2 = soup_price.find(class_='sub-price')
-        card_price_formatted  = re.search(card_price_regex, str(card_price)).group(0)
-        #print(str(card_price2))
-        #print(str(card_price_formatted))
+        card_price_formatted  = str(card_price).replace("<span class=\"item-price\">$","").replace("<span class=\"sub-price\">","").replace("</span></span>","")
         print(card_price_formatted)
         #runGQL(card_name_cleaned,editions_dict[edition].replace(" ","-"))
 
-
-         
             
 print("Process End:", now.strftime("%d/%m/%Y %H:%M:%S"))
