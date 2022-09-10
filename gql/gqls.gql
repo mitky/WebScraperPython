@@ -1,0 +1,5 @@
+mutation MyMutation {
+  delete_lotr_all_cards(where: {}) {
+    affected_rows
+  }
+}
