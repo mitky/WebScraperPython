@@ -14,5 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v4.2.0
+        with:
+          # Version range or exact version of Python or PyPy to use, using SemVer's version range syntax. Reads from .python-version if unset.
+          python-version: 3 # optional
+          # File containing the Python version to use. Example: .python-version
+      - run: pip install gql
+      - run: pip install bs4
+      - run: pip install requests_toolbelt
       - name: Run scraper
         run: pyton3 LotrTCG.py
