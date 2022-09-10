@@ -24,4 +24,4 @@ jobs:
       - run: pip install bs4
       - run: pip install requests_toolbelt
       - name: Run scraper
-        run: pyton LotrTCG.py
+        run: python LotrTCG.py
