@@ -48,7 +48,7 @@ client = Client(transport=transport, fetch_schema_from_transport=True)
 
 def runGQL(card_name, card_edition, card_price, source):
 
-    query = gql("""mutation MyMutation($card_name: String!, $card_edition: String!, $card_price: String!, $source: String!) {
+    query = gql("""mutation MyMutation($card_name: String!, $card_edition: String!, $card_price: float!, $source: String!) {
       insert_lotr_all_cards_pricing(objects: {card_name: $card_name,
                                       card_edition: $card_edition,
                                       card_price: $card_price,
@@ -88,6 +88,6 @@ for cards in cards_table:
         card_price2 = soup_price.find(class_='sub-price')
         card_price_formatted  = str(card_price).replace("<span class=\"item-price\">$","").replace("<span class=\"sub-price\">","").replace("</span></span>","")
         print(card_price_formatted)
-        runGQL(card_name_cleaned,editions_dict[edition].replace(" ","-"),card_price_formatted, source)
+        runGQL(card_name_cleaned,editions_dict[edition].replace(" ","-"),float(card_price_formatted), source)
 
 print("Process End:", now.strftime("%d/%m/%Y %H:%M:%S"))
