@@ -76,7 +76,12 @@ for cards in cards_table:
         try:
             NEW_URL = URL_PRICING + "/" + editions_dict[edition].replace(" ","-") + "/" + card_name_cleaned
             page_price = requests.get(NEW_URL)
-            soup2 = BeautifulSoup(page_price.content, "html.parser")
+            soup_price = BeautifulSoup(page_price.content, "html.parser")
+            #price_table = 
+            card_price = soup_price.find(class_='item-price')
+
+            print(type(card_price))
+            #print(str(card_price))
             #runGQL(card_name_cleaned,editions_dict[edition].replace(" ","-"))
             pass
         except TypeError as numerr:
