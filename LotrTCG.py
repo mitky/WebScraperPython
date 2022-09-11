@@ -13,12 +13,16 @@ URL_PRICING = "https://www.ccgcastle.com/product/lotr-tcg/"
 page = requests.get(URL)
 soup = BeautifulSoup(page.content, "html.parser")
 
-HASURA_URL = "https://lotrwebscrapper.herokuapp.com/v1/graphql"
+HASURA_URL = "https://lotrtcgwebscrapper.herokuapp.com/v1/graphql"
 transport = RequestsHTTPTransport(
     url=HASURA_URL,
     verify=True,
     retries=3,
 )
+
+name_dic = {
+  "-(D)":""
+}
 
 editions_dict = {
   "1": "The-Fellowship-of-the-Ring",
@@ -74,10 +78,8 @@ for cards in cards_table:
     for row in rows:
         card_id = str(row.find('td').string)
         card_name = row.find('td', class_= 'col1').string
-        #will fix this tomorrow, too sleepy to make dict
         card_name_cleaned = str(card_name).replace(",","").replace(" ","-").replace("•","").replace("-(D)","").replace("-(M)","").replace("-(D)","").replace("-(SPD)","").replace("-(W)","").replace("-(P)","").replace("-(AFD)","").replace("-(T)","")
         card_id_regex = re.compile(r"^([^a-zA-Z]*)")
-        card_price_regex = re.compile(r"(\d)(<\w+ \w+=\"\w+-\w+\">.)(\d+)")
         edition = re.search(card_id_regex, card_id).group(0)
         if edition == '0':
             pass
@@ -86,9 +88,10 @@ for cards in cards_table:
         soup_price = BeautifulSoup(page_price.content, "html.parser")
         card_price = soup_price.find(class_='item-price')
         card_price2 = soup_price.find(class_='sub-price')
+        print(str(card_price))
         card_price_formatted  = str(card_price).replace("<span class=\"item-price\">$","").replace("<span class=\"sub-price\">","").replace("</span></span>","")
         print(card_price_formatted)
-        if card_price_formatted != "None":
-          runGQL(card_name_cleaned,editions_dict[edition].replace(" ","-"),card_price_formatted, source)
+        #if card_price_formatted != "None":
+          #runGQL(card_name_cleaned,editions_dict[edition].replace(" ","-"),card_price_formatted, source)
 
 print("Process End:", now.strftime("%d/%m/%Y %H:%M:%S"))
