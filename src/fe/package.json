@@ -1,0 +1,15 @@
+{
+  "name": "fe",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "gastby": "^1.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "scripts": {
+    "start": "gatsby develop",
+    "build": "gatsby build"
+  }
+}
