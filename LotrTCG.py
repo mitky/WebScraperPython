@@ -91,7 +91,7 @@ for cards in cards_table:
         print(str(card_price))
         card_price_formatted  = str(card_price).replace("<span class=\"item-price\">$","").replace("<span class=\"sub-price\">","").replace("</span></span>","")
         print(card_price_formatted)
-        #if card_price_formatted != "None":
-          #runGQL(card_name_cleaned,editions_dict[edition].replace(" ","-"),card_price_formatted, source)
+        if card_price_formatted != "None":
+          runGQL(card_name_cleaned,editions_dict[edition].replace(" ","-"),card_price_formatted, source)
 
 print("Process End:", now.strftime("%d/%m/%Y %H:%M:%S"))
